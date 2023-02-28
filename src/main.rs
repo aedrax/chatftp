@@ -1,4 +1,5 @@
 use std::io::{Read, Write};
+use regex::Regex;
 
 fn main() {
     // prompt the user for a server ip or hostname
@@ -51,6 +52,21 @@ fn main() {
     let mut stream_clone = stream.try_clone().unwrap();
     std::thread::spawn(move || {
         loop {
+            // send the FTP command to initiate a passive data connection
+            stream_clone.write("PASV\r\n".as_bytes()).unwrap();
+
+            // read the response from the server
+            let mut response = String::new();
+            stream_clone.read_to_string(&mut response).unwrap();
+
+            // parse the response to get the ip and port
+            // and example response would look like the following:
+            // 227 Entering Passive Mode (127,0,0,1,82,13).
+            let re = Regex::new(r"(\d{1,3}\,){4}(\d{1,3}\,\d{1,3})").unwrap();
+            let captures = re.captures(&response).unwrap();
+            let ip = captures.get(1).unwrap().as_str();
+            let port = captures.get(2).unwrap().as_str();
+
             // send the FTP command to download the chat.db file or create it if it doesn't exist
             stream_clone.write("RETR chat.db\r\n ".as_bytes()).unwrap();
 

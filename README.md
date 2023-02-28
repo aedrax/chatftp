@@ -19,8 +19,8 @@ chat messages to a text file.
 
 1. Clone this repository to your machine.
 2. Navigate to the project directory in your terminal.
-3. Run the command cargo build to build the project.
-4. If the build is successful, run the command cargo run to start the chat client.
+3. Run the command `cargo build` to build the project.
+4. If the build is successful, run the command `cargo run` to start the chat client.
 
 ### Usage
 
@@ -31,7 +31,7 @@ the name of the file you will use to store chat messages.
 3. Once you are connected, you can start sending and receiving chat messages. To send a message,
 simply type your message and press enter. Your message will be sent to all other users connected to
 the same FTP server.
-4. To exit the chat client, type the command /exit and press enter.
+4. To exit the chat client, type the command `/exit` and press enter.
 
 ### License
 

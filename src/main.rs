@@ -44,19 +44,15 @@ fn main() {
     password = password.trim().to_string();
 
     // send the username and password to the server as FTP commands
-    stream.write(format!("USER {}\r ", username).as_bytes()).unwrap();
-    stream.write(format!("PASS {}\r ", password).as_bytes()).unwrap();
-
-    // read the response from the server
-    let mut response = String::new();
-    stream.read_to_string(&mut response).unwrap();
+    stream.write(format!("USER {}\r\n", username).as_bytes()).unwrap();
+    stream.write(format!("PASS {}\r\n", password).as_bytes()).unwrap();
 
     // create a new thread to continuously read from the server
     let mut stream_clone = stream.try_clone().unwrap();
     std::thread::spawn(move || {
         loop {
             // send the FTP command to download the chat.db file or create it if it doesn't exist
-            stream_clone.write("RETR chat.db\r ".as_bytes()).unwrap();
+            stream_clone.write("RETR chat.db\r\n ".as_bytes()).unwrap();
 
             // read the response from the server
             let mut response = String::new();
@@ -90,13 +86,6 @@ fn main() {
         // append the message file to the chat.db file on the FTP server
         stream.write("APPE chat.db\r ".as_bytes()).unwrap();
     }
-
-    // read the response from the server
-    let mut response = String::new();
-    stream.read_to_string(&mut response).unwrap();
-
-    // print the response
-    println!("{}", response);
 
     // close the connection
     stream.shutdown(std::net::Shutdown::Both).unwrap();

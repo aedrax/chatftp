@@ -60,6 +60,9 @@ fn main() {
 
             // print the response
             println!("{}", response);
+
+            // sleep for 500 milliseconds
+            std::thread::sleep(std::time::Duration::from_millis(500));
         }
     });
 

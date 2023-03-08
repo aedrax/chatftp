@@ -1,4 +1,7 @@
 # ChatFTP
+You've heard of chatGPT, well now you have chatFTP!
+Unfortunately, the only relevance is the funny name.
+
 This is a simple chat client written in Rust that integrates with an FTP server to read and write
 chat messages to a text file.
 
